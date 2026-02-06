@@ -19,4 +19,17 @@ public class DataManagerTests
         Assert.Equal(6,dataManager.Stops.Count);
     }
 
+    [Fact]
+    public void Test_Drivers_File_Load_And_Modify()
+    {
+        // ensure drivers file is controlled for test
+        File.WriteAllText("drivers.txt","Alice"+Environment.NewLine+"Bob");
+        var dm = new DataManager();
+        Assert.Equal(2, dm.Drivers.Count);
+        dm.AddDriver(new Driver("Charlie"));
+        Assert.Equal(3, dm.Drivers.Count);
+        dm.RemoveDriver(dm.Drivers.First(d => d.Name=="Alice"));
+        Assert.Equal(2, dm.Drivers.Count);
+    }
+
 }
